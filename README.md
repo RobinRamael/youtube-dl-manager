@@ -5,9 +5,11 @@ youtube-dl-manager automatically downloads all new videos in your subscription f
 ## usage
 
 Download all new videos in your subscription feed to your video directory:
+
     python youtube.py
 
 Download a specific video to your directory:
+
     python youtube.py <youtube-url> (<youtube-url> ...)
 
 
