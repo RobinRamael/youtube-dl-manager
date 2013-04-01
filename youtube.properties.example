@@ -1,0 +1,3 @@
+username=username_goes_here
+video_dir=full_path_for_video_directory_goes_here
+db_dir=database_file_is_stored_in_this_dir_remove_line_to_default_to_video_dir
