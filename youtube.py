@@ -92,6 +92,7 @@ class YTVideo:
                 date_as_str = str(self.publishdate)
             else: date_as_str = ""
             c.execute("INSERT INTO videos values (?, ?);", (self.id, date_as_str))
+            connection.commit()
         else: print 'download of', self.id, 'failed'
 
 
@@ -103,20 +104,12 @@ def download_all_in_feed():
     c = db.cursor()
 
     c.execute('''CREATE TABLE IF NOT EXISTS videos(id text, pubdate text)''')
-    c.execute('''SELECT count(*) FROM videos''')
-    if c.fetchone()[0] > 0:
-        c.execute("SELECT max(pubdate) FROM videos where pubdate not like ''")
-        last_download_date = c.fetchone()[0]
-        #print last_download_date
-    else: last_download_date = None
-
     videos_in_feed = [YTVideo(item) for item in feed['items']]
 
     os.chdir(VIDEODIR)
 
     for video in videos_in_feed:
         video.download(db)
-
 
     db.commit()
     db.close()
