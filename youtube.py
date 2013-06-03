@@ -19,12 +19,13 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import urllib2, re, PyRSS2Gen,  feedparser, sqlite3, os, urlparse, subprocess, sys
+import urllib2, re, PyRSS2Gen,  feedparser, sqlite3, os, urlparse, subprocess, sys, os
 
 
 
 try:
-    propfile = file('./youtube.properties', 'r')
+    proppath = os.path.dirname(os.path.realpath(__file__)) + '/youtube.properties'
+    propfile = file(proppath, 'r')
 except:
     print("No propertiesfile found, please copy the youtube.properties.example file and fill out the fields.")
     exit(1)
@@ -133,7 +134,7 @@ def main():
     if len(sys.argv) == 1:
         download_all_in_feed()
     else:
-        db = sqlite3.connect(DB_FILE)
+        db = sqlite3.connect(DBFILE)
         for arg in sys.argv[1:]:
             video = YTVideo({'title':'', 'link': arg, 'author':'', 'date_parsed': ''})
             video.download(db)
