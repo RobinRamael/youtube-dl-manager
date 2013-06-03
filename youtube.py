@@ -27,22 +27,22 @@ try:
     proppath = os.path.dirname(os.path.realpath(__file__)) + '/youtube.properties'
     propfile = file(proppath, 'r')
 except:
-    print("No propertiesfile found, please copy the youtube.properties.example file and fill out the fields.")
+    error_out("No propertiesfile found, please copy the youtube.properties.example file and fill out the fields.")
     exit(1)
 
 try:
     props = dict([tuple(l.strip().split('=')) for l in propfile.readlines()])
 except Exception as e:
-    print("malformed properties file, please see the example provided")
+    error_out("malformed properties file, please see the example provided")
     print e
     exit(1)
+
 
 try:
     VIDEODIR = props['video_dir']
     USERNAME = props['username']
 except:
-    print("malformed properties file: video_dir or username missing. Please see the example provided.")
-    exit(1)
+    error_out("malformed properties file: video_dir or username missing. Please see the example provided.")
 
 
 DBDIR = props['db_dir'] if 'db_dir' in props else VIDEODIR
@@ -99,6 +99,9 @@ class YTVideo:
 def download_all_in_feed():
     feed = feedparser.parse(FEEDURL)
 
+    if feed['feed'] == {}:
+        error_out("something went wrong while getting your videos, is your username correct?")
+
     db = sqlite3.connect(DBFILE)
 
     c = db.cursor()
@@ -113,6 +116,13 @@ def download_all_in_feed():
 
     db.commit()
     db.close()
+
+
+def error_out(msg):
+    sys.stderr.write(msg + "\n")
+    sys.stderr.write("feed: " + FEEDURL + "\n")
+    sys.stderr.write("properties:" + str(props) + "\n")
+    exit(1)
 
 
 def main():
