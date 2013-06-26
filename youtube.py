@@ -23,6 +23,12 @@ import urllib2, re, PyRSS2Gen,  feedparser, sqlite3, os, urlparse, subprocess, s
 
 
 
+def error_out(msg):
+    sys.stderr.write(msg + "\n")
+    sys.stderr.write("feed: " + FEEDURL + "\n")
+    sys.stderr.write("properties:" + str(props) + "\n")
+    exit(1)
+
 try:
     proppath = os.path.dirname(os.path.realpath(__file__)) + '/youtube.properties'
     propfile = file(proppath, 'r')
@@ -116,13 +122,6 @@ def download_all_in_feed():
 
     db.commit()
     db.close()
-
-
-def error_out(msg):
-    sys.stderr.write(msg + "\n")
-    sys.stderr.write("feed: " + FEEDURL + "\n")
-    sys.stderr.write("properties:" + str(props) + "\n")
-    exit(1)
 
 
 def main():
