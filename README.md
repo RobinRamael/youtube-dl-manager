@@ -15,7 +15,7 @@ Download a specific video to your directory:
 
 ## setup and requirements
 
-All commands require you to have filled out the `youtube.properties.example` file and moved it to `youtube.properties`. Note that username is the original youtube username and not your google username.
+All commands require you to have filled out the `youtube.properties.example` file and moved it to `youtube.properties` _in the same location as the script (where it is located, not where it is run)_. Note that username is the original youtube username and not your google username.
 
 For now this project requires [youtube-dl](http://rg3.github.com/youtube-dl/), which is a great project in itself. to be installed and on your path. this is also written in python so I might just include it in the project one day, but I'm not sure how. youtube-dl does not support importing and isn't on pip, so...
 
